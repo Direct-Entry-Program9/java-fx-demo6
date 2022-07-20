@@ -53,6 +53,13 @@ public class TableFormController {
                     return;
                 }
 
+                if (tblCustomerDetail.getSelectionModel().getSelectedItem()!=null){
+                    int selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedIndex();
+                    CustomerTM updateCustomer = new CustomerTM(txtId.getText(), txtName.getText(), txtAddress.getText());
+                    olCustomer.set(selectedCustomer,updateCustomer);
+                    return;
+                }
+
                 for (CustomerTM customerTM : olCustomer) {
                     if (customerTM.getId().equals(txtId.getText())) {
                         new Alert(Alert.AlertType.ERROR, "Duplicate Customer id Not allowed").showAndWait();
@@ -60,6 +67,7 @@ public class TableFormController {
                         return;
                     }
                 }
+
                 olCustomer.add(new CustomerTM(txtId.getText(),txtName.getText(),txtAddress.getText()));
 
                 txtId.clear();
