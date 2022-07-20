@@ -33,75 +33,6 @@ public class TableFormController {
         tblCustomerDetail.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tblCustomerDetail.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("Address"));
 
-        btnSaveCustomer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                ObservableList<CustomerTM> olCustomer = tblCustomerDetail.getItems();
-
-                if (txtId.getText().isBlank()){
-                    new Alert(Alert.AlertType.ERROR, "Customer ID can't be empty").showAndWait();
-                    txtId.requestFocus();
-                    return;
-                } else if (txtAddress.getText().isBlank()) {
-                    new Alert(Alert.AlertType.ERROR, "Customer Address can't be empty").showAndWait();
-                    txtId.requestFocus();
-                    return;
-                }else if (txtName.getText().isBlank()) {
-                    new Alert(Alert.AlertType.ERROR, "Customer Name can't be empty").showAndWait();
-                    txtName.requestFocus();
-                    return;
-                }
-
-                if (tblCustomerDetail.getSelectionModel().getSelectedItem()!=null){
-                    int selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedIndex();
-                    CustomerTM updateCustomer = new CustomerTM(txtId.getText(), txtName.getText(), txtAddress.getText());
-                    olCustomer.set(selectedCustomer,updateCustomer);
-                    return;
-                }
-
-                for (CustomerTM customerTM : olCustomer) {
-                    if (customerTM.getId().equals(txtId.getText())) {
-                        new Alert(Alert.AlertType.ERROR, "Duplicate Customer id Not allowed").showAndWait();
-                        txtId.requestFocus();
-                        return;
-                    }
-                }
-
-                olCustomer.add(new CustomerTM(txtId.getText(),txtName.getText(),txtAddress.getText()));
-
-                txtId.clear();
-                txtName.clear();
-                txtAddress.clear();
-                txtId.requestFocus();
-
-            }
-        });
-
-        btnNewCustomer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                txtId.requestFocus();
-                tblCustomerDetail.getSelectionModel().clearSelection();
-
-            }
-        });
-
-        btnDeleteCustomer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                ObservableList<CustomerTM> olCustomer = tblCustomerDetail.getItems();
-                CustomerTM selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedItem();
-
-                Optional<ButtonType> selectedOption = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to delete this customer?", ButtonType.YES,ButtonType.NO).showAndWait();
-                if (selectedOption.get()==ButtonType.YES) olCustomer.remove(selectedCustomer);
-
-
-            }
-        });
-
         tblCustomerDetail.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CustomerTM>() {
             @Override
             public void changed(ObservableValue<? extends CustomerTM> observableValue, CustomerTM previousCustomer, CustomerTM currentCustomer) {
@@ -124,6 +55,70 @@ public class TableFormController {
                 txtId.setEditable(false);
             }
         });
+
+    }
+
+    public void btnSaveCustomerOnAction(ActionEvent actionEvent) {
+        ObservableList<CustomerTM> olCustomer = tblCustomerDetail.getItems();
+
+        if (txtId.getText().isBlank()){
+            new Alert(Alert.AlertType.ERROR, "Customer ID can't be empty").showAndWait();
+            txtId.requestFocus();
+            return;
+        } else if (txtAddress.getText().isBlank()) {
+            new Alert(Alert.AlertType.ERROR, "Customer Address can't be empty").showAndWait();
+            txtId.requestFocus();
+            return;
+        }else if (txtName.getText().isBlank()) {
+            new Alert(Alert.AlertType.ERROR, "Customer Name can't be empty").showAndWait();
+            txtName.requestFocus();
+            return;
+        }
+
+                /*if (tblCustomerDetail.getSelectionModel().getSelectedItem()!=null){
+                    int selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedIndex();
+                    CustomerTM updateCustomer = new CustomerTM(txtId.getText(), txtName.getText(), txtAddress.getText());
+                    olCustomer.set(selectedCustomer,updateCustomer);
+                    return;
+                }*/
+
+        if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")){
+            for (CustomerTM customerTM : olCustomer) {
+                if (customerTM.getId().equals(txtId.getText())) {
+                    new Alert(Alert.AlertType.ERROR, "Duplicate Customer id Not allowed").showAndWait();
+                    txtId.requestFocus();
+                    return;
+                }
+            }
+
+            olCustomer.add(new CustomerTM(txtId.getText(),txtName.getText(),txtAddress.getText()));
+
+            txtId.clear();
+            txtName.clear();
+            txtAddress.clear();
+            txtId.requestFocus();
+        }
+        else {
+            CustomerTM selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedItem();
+            selectedCustomer.setName(txtName.getText());
+            selectedCustomer.setAddress(txtAddress.getText());
+            tblCustomerDetail.refresh();
+        }
+
+    }
+
+    public void btnNewCustomerOnAction(ActionEvent actionEvent) {
+        txtId.requestFocus();
+        tblCustomerDetail.getSelectionModel().clearSelection();
+    }
+
+    public void btnDeleteCustomerOnAction(ActionEvent actionEvent) {
+
+        ObservableList<CustomerTM> olCustomer = tblCustomerDetail.getItems();
+        CustomerTM selectedCustomer = tblCustomerDetail.getSelectionModel().getSelectedItem();
+
+        Optional<ButtonType> selectedOption = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to delete this customer?", ButtonType.YES,ButtonType.NO).showAndWait();
+        if (selectedOption.get()==ButtonType.YES) olCustomer.remove(selectedCustomer);
 
     }
 }

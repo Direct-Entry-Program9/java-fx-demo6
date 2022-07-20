@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TableFormController">
+
    <children>
       <TableView fx:id="tblCustomerDetail" layoutX="14.0" layoutY="186.0" prefHeight="200.0" prefWidth="575.0">
         <columns>
@@ -29,9 +30,9 @@
       </VBox>
       <VBox layoutX="256.0" layoutY="36.0" prefHeight="88.0" prefWidth="140.0" spacing="5.0">
          <children>
-            <Button fx:id="btnSaveCustomer" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Save Customer" />
-            <Button fx:id="btnNewCustomer" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: Green; -fx-text-fill: White;" text="New Customer +" />
-            <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: Red; -fx-text-fill: white;" text="Delete Customer" />
+            <Button fx:id="btnSaveCustomer" defaultButton="true" mnemonicParsing="false" onAction="#btnSaveCustomerOnAction" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Save Customer" />
+            <Button fx:id="btnNewCustomer" mnemonicParsing="false" onAction="#btnNewCustomerOnAction" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: Green; -fx-text-fill: White;" text="New Customer +" />
+            <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" onAction="#btnDeleteCustomerOnAction" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: Red; -fx-text-fill: white;" text="Delete Customer" />
          </children>
       </VBox>
    </children>
